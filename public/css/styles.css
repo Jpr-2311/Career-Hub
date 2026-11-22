@@ -11444,7 +11444,7 @@ body {
 }
 
 .text-white-75 {
-  color: rgba(242, 247, 248) !important;
+  color: rgba(242, 247, 248, 0.75) !important;
 }
 
 .btn-xl {
@@ -11654,5 +11654,5 @@ header.masthead-home h1, header.masthead-home .h1 {
 }
 
 .addButton{
-   -right: 3rem;
+   right: 3rem;
 }
