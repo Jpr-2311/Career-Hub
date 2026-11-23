@@ -25,11 +25,11 @@ Route::group(['middleware' => ['auth','admin']], function () {
     //Admin Job Routes
     Route::resource('adjobs','Admin\JobController');
     Route::get('/job-list','Admin\JobController@index')->name('job-list');
-    Route::get('jobs-view/{$id}', 'Admin\JobController@show')->name('jobs-view');
+    Route::get('jobs-view/{id}', 'Admin\JobController@show')->name('jobs-view');
     //Admin Company Routes
     Route::resource('adcompanies','Admin\CompanyController');
     Route::get('/company-list','Admin\CompanyController@index')->name('company-list');
-    Route::get('company-view/{$id}', 'Admin\CompanyController@show')->name('company-view');
+    Route::get('company-view/{id}', 'Admin\CompanyController@show')->name('company-view');
   
 
 });

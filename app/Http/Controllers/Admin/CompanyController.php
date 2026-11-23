@@ -17,7 +17,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = Company::orderBy('created_at','desc')->paginate()->all();
+        $companies = Company::orderBy('created_at','desc')->paginate();
         $user = User::all();
         return view('admin.company.index',compact('companies','user'));
     }
@@ -51,7 +51,7 @@ class CompanyController extends Controller
      */
     public function show($id)
     {
-        $companies = Company::find($id);
+        $companies = Company::findOrFail($id);
         return view('admin.company.show',compact('companies'));
     }
 

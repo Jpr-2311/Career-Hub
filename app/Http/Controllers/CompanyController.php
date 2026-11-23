@@ -15,7 +15,10 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = Company::where('status','Active')->orWhere('status','Retrieved')->orderBy('created_at','desc')->paginate()->all();
+        $companies = Company::where(function ($query) {
+            $query->where('status', 'Active')
+                ->orWhere('status', 'Retrieved');
+        })->orderBy('created_at', 'desc')->paginate();
         return view('company.index',compact('companies'));
 
     }
@@ -34,7 +37,13 @@ class CompanyController extends Controller
 
     public function mycompanies()
     {
-        $companies = Company::where('user_id','=',Auth::user()->id)->where('status','Active')->orWhere('status','Retrieved')->orderBy('created_at','desc')->paginate()->all();
+        $companies = Company::where('user_id', Auth::user()->id)
+            ->where(function ($query) {
+                $query->where('status', 'Active')
+                    ->orWhere('status', 'Retrieved');
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate();
         return view('company.mycompanies',compact('companies'));
     }
 
@@ -110,7 +119,7 @@ class CompanyController extends Controller
      */
     public function show($id)
     {
-        $companies = Company::find($id);
+        $companies = Company::findOrFail($id);
         return view('company.show',compact('companies'));
     }
 
@@ -122,7 +131,7 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
-        $companies = Company::find($id);
+        $companies = Company::findOrFail($id);
         return view('company.edit',compact('companies'));
     }
 

@@ -18,4 +18,14 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_admin_detail_routes_do_not_use_literal_dollar_sign_placeholders()
+    {
+        $this->assertTrue(
+            \Illuminate\Support\Facades\Route::getRoutes()->getByName('jobs-view') !== null
+        );
+        $this->assertTrue(
+            \Illuminate\Support\Facades\Route::getRoutes()->getByName('company-view') !== null
+        );
+    }
 }

@@ -42,27 +42,45 @@ class JobsController extends Controller
 
     public function archive()
     {
-        $jobs = Jobs::where('user_id', Auth::user()->id)->where('status', 'Archived')->orWhere('status', 'Rejected')->orderBy('created_at', 'desc')->paginate()->all();
+        $jobs = Jobs::where('user_id', Auth::user()->id)
+            ->where(function ($query) {
+                $query->where('status', 'Archived')
+                    ->orWhere('status', 'Rejected');
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate();
         $companies = Company::all();
         return view('jobs.archives', compact('jobs', 'companies'));
     }
 
     public function closed()
     {
-        $jobs = Jobs::where('user_id', Auth::user()->id)->where('status', 'Closed')->orderBy('created_at', 'desc')->paginate()->all();
+        $jobs = Jobs::where('user_id', Auth::user()->id)
+            ->where('status', 'Closed')
+            ->orderBy('created_at', 'desc')
+            ->paginate();
         $companies = Company::all();
         return view('jobs.closed', compact('jobs', 'companies'));
     }
 
     public function declined()
     {
-        $jobs = Jobs::where('user_id', Auth::user()->id)->where('status', 'Rejected')->orderBy('created_at', 'desc')->paginate()->all();
+        $jobs = Jobs::where('user_id', Auth::user()->id)
+            ->where('status', 'Rejected')
+            ->orderBy('created_at', 'desc')
+            ->paginate();
         $companies = Company::all();
         return view('jobs.declined', compact('jobs', 'companies'));
     }
     public function myjobs()
     {
-        $jobs = Jobs::where('user_id', '=', Auth::user()->id)->where('status', 'Active')->orWhere('status', 'Retrieved')->orderBy('created_at', 'desc')->paginate()->all();
+        $jobs = Jobs::where('user_id', Auth::user()->id)
+            ->where(function ($query) {
+                $query->where('status', 'Active')
+                    ->orWhere('status', 'Retrieved');
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate();
         return view('jobs.myjobs', compact('jobs'));
     }
 
@@ -131,7 +149,7 @@ class JobsController extends Controller
      */
     public function edit($id)
     {
-        $jobs = Jobs::find($id);
+        $jobs = Jobs::findOrFail($id);
         return view('jobs.edit', compact('jobs'));
     }
 

@@ -18,7 +18,7 @@ class JobController extends Controller
      */
     public function index()
     {
-        $jobs = Jobs::orderBy('created_at','desc')->paginate()->all();
+        $jobs = Jobs::orderBy('created_at','desc')->paginate();
         $user = User::all();
         $companies = Company::all();
         return view('admin.jobs.index',compact('jobs','user','companies'));
@@ -53,7 +53,7 @@ class JobController extends Controller
      */
     public function show($id)
     {
-        $jobs = Jobs::find($id);
+        $jobs = Jobs::findOrFail($id);
         return view('admin.jobs.show',compact('jobs'));
     }
 
